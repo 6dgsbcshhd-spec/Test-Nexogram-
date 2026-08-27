@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Nexogram</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#07111d;color:#f5f7fb;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+button,input{font:inherit}.page{min-height:100vh}.auth{display:flex;align-items:center;justify-content:center;padding:24px;background:radial-gradient(circle at 50% 0,#263d68,#07111d 60%)}.box{width:100%;max-width:430px}.logo{text-align:center;font-size:42px;font-weight:900;letter-spacing:-1px}.nexo{color:#61a9ff}.sub{text-align:center;color:#9eabc0;margin:8px 0 20px}.card{background:#0d1a2a;border:1px solid #21334b;border-radius:20px;padding:18px;margin:12px 0;box-shadow:0 10px 30px #0004}.input{width:100%;padding:14px;margin:6px 0 10px;background:#091522;border:1px solid #29405c;border-radius:13px;color:#fff;outline:none}.input:focus{border-color:#5d9eea}.primary{width:100%;padding:14px;border:0;border-radius:13px;background:#3f91e8;color:white;font-weight:800;cursor:pointer}.privacy{font-size:12px;line-height:1.5;color:#aebbd0;background:#0a1523;border-radius:12px;padding:11px;margin:10px 0}.err{color:#ff7777;font-size:13px}.app{display:none;min-height:100vh;padding-bottom:72px}.top{height:76px;padding:28px 15px 8px;border-bottom:1px solid #17283c;display:flex;align-items:center;gap:10px;background:#081422;position:sticky;top:0;z-index:4}.brand{font-size:23px;font-weight:900;flex:1}.coin{color:#ffd45b}.search{margin:10px 12px;width:calc(100% - 24px);padding:12px 14px;border:0;border-radius:13px;background:#122237;color:#fff;outline:none}.section{display:none}.section.active{display:block}.chat{padding:13px 15px;display:flex;gap:12px;border-bottom:1px solid #142437;cursor:pointer}.chat:hover{background:#0d1b2c}.ava{width:50px;height:50px;border-radius:50%;background:#2c6cae;display:grid;place-items:center;font-size:23px;flex:none}.name{font-weight:800}.prev{color:#8394aa;font-size:13px;margin-top:5px}.small{font-size:12px;color:#7f90a7}.nav{position:fixed;bottom:0;left:0;right:0;height:72px;background:#091522;border-top:1px solid #1b2b40;display:flex;justify-content:space-around;align-items:center;z-index:10}.nav button{background:none;border:0;color:#8ea1b8;font-size:10px;cursor:pointer}.nav button.active{color:#63aaff}.nav b{display:block;font-size:20px;margin-bottom:2px}.row{padding:14px 0;border-bottom:1px solid #203249;display:flex;justify-content:space-between;gap:12px}.btn{display:block;width:100%;padding:12px;border:0;border-radius:12px;background:#3f91e8;color:#fff;margin-top:9px;cursor:pointer}.danger{background:#a7444d}.tag{color:#63aaff}.switch{color:#6fc5ff}.feature{display:flex;gap:12px;align-items:center;padding:11px 0}.feature i{font-style:normal;font-size:24px;width:34px}.pill{display:inline-block;background:#162b42;border:1px solid #294564;color:#b9d8ff;padding:4px 8px;border-radius:999px;font-size:11px}.hidden{display:none}.chatwindow{position:fixed;inset:0;background:#07111d;z-index:30;padding-bottom:65px}.chathead{height:76px;padding:28px 12px 8px;border-bottom:1px solid #203149;display:flex;align-items:center;gap:8px;background:#091725}.back{background:none;border:0;color:white;font-size:28px}.messages{height:calc(100vh - 136px);overflow:auto;padding:18px}.bubble{max-width:78%;padding:10px 13px;border-radius:15px;background:#12243a;margin:7px 0}.mine{margin-left:auto;background:#2566a5}.composer{position:fixed;bottom:0;left:0;right:0;padding:9px;background:#091522;display:flex;gap:7px}.composer input{flex:1;padding:11px 14px;border:0;border-radius:20px;background:#14253a;color:#fff}.composer button{border:0;border-radius:50%;width:44px;background:#3f91e8;color:#fff}.modal{position:fixed;inset:0;background:#0008;z-index:50;display:none;align-items:flex-end}.modalbox{width:100%;background:#0c1928;border-radius:22px 22px 0 0;padding:20px;max-height:82vh;overflow:auto}.listbtn{width:100%;text-align:left;background:none;border:0;color:white;padding:14px 0;border-bottom:1px solid #203249}.backtop{background:none;border:0;color:#fff;font-size:23px}
+</style>
+</head>
+<body>
+
+<div id="registration" class="page auth">
+ <div class="box">
+  <div class="logo">✦ <span class="nexo">Nexo</span>gram</div>
+  <div class="sub">Приватный мессенджер нового поколения</div>
+  <div class="card">
+   <b>Создать аккаунт</b>
+   <input id="name" class="input" placeholder="Имя">
+   <input id="tag" class="input" placeholder="@username">
+   <div class="privacy">🔐 <b>Privacy by design</b><br>Номер телефона, домашний адрес и точная геолокация не запрашиваются и не отображаются другим пользователям. Поиск — только по @username.</div>
+   <div id="err" class="err"></div>
+   <button id="REGISTER_BUTTON" class="primary">СОЗДАТЬ АККАУНТ</button>
+  </div>
+ </div>
+</div>
+
+<div id="messenger" class="app">
+ <section id="chats" class="section active">
+  <div class="top"><div class="brand">✦ <span class="nexo">Nexo</span>gram</div><button class="backtop" onclick="openSearch()">⌕</button></div>
+  <input id="searchInput" class="search" placeholder="Поиск по @username" oninput="filterChats()">
+  <div id="chatList">
+   <div class="chat" data-name="Алексей" onclick="openChat('Алексей','👨')"><div class="ava">👨</div><div><div class="name">Алексей</div><div class="prev">🎙️ Голосовое сообщение</div></div></div>
+   <div class="chat" data-name="Nexogram News" onclick="openChat('Nexogram News','✦')"><div class="ava">✦</div><div><div class="name">Nexogram News</div><div class="prev">Новое обновление</div></div></div>
+   <div class="chat" data-name="Друзья" onclick="openChat('Друзья','👥')"><div class="ava">👥</div><div><div class="name">Друзья</div><div class="prev">Фото</div></div></div>
+   <div class="chat" data-name="Избранное" onclick="openChat('Избранное','⭐')"><div class="ava">⭐</div><div><div class="name">Избранное</div><div class="prev">Ваши сохранённые сообщения</div></div></div>
+  </div>
+ </section>
+
+ <section id="groups" class="section">
+  <div class="top"><div class="brand">👥 Группы</div><button class="backtop" onclick="newGroup()">＋</button></div>
+  <div class="card"><h2>Ваши сообщества</h2><div class="feature"><i>🏠</i><div><b>Домовой чат</b><div class="small">Обсуждение дома • 84 участника</div></div></div><div class="feature"><i>🎮</i><div><b>Игровой клуб</b><div class="small">Темы • опросы • защита от спама</div></div></div><button class="btn" onclick="newGroup()">Создать группу</button></div>
+  <div class="card"><div class="row">👑 Администраторы <b>Вкл.</b></div><div class="row">📌 Закрепы <b>Вкл.</b></div><div class="row">📊 Опросы <b>Вкл.</b></div><div class="row">🧵 Темы <b>Вкл.</b></div><div class="row">🤖 Боты <b>Поддержка</b></div><div class="row">🛡️ Антиспам <b>Активен</b></div></div>
+ </section>
+
+ <section id="channels" class="section">
+  <div class="top"><div class="brand">📢 Каналы</div><button class="backtop" onclick="newChannel()">＋</button></div>
+  <div class="chat" onclick="openChannel()"><div class="ava">📰</div><div><div class="name">Nexogram News</div><div class="prev">Новое обновление платформы</div><div class="small">12.4K подписчиков • 8.2K просмотров</div></div></div>
+  <div class="card"><h3>Возможности каналов</h3><div class="row">📣 Публикации админов <b>✓</b></div><div class="row">👁️ Просмотры <b>✓</b></div><div class="row">💬 Комментарии <b>✓</b></div><div class="row">♾️ Подписчики <b>Без лимита</b></div></div>
+ </section>
+
+ <section id="store" class="section">
+  <div class="top"><div class="brand">🪙 Nexo Coin</div></div>
+  <div class="card"><h2><span class="coin">🪙 200 Nexo Coin</span></h2><p class="small">Внутренняя валюта Nexogram</p><button class="btn" onclick="addCoins()">+100 Nexo Coin</button></div>
+  <div class="card"><h2>🎁 Подарки</h2><div class="row">🐴 Лошадка <b>15 🪙</b></div><div class="row">🎭 Маска анонимуса <b>20 🪙</b></div><div class="row">💎 Кристалл <b>50 🪙</b></div></div>
+  <div class="card"><h2>✨ Красивые номера</h2><div class="row">NEXO-888-888 <b>Premium</b></div><div class="row">NEXO-777-777 <b>Premium</b></div></div>
+ </section>
+
+ <section id="files" class="section">
+  <div class="top"><div class="brand">☁️ Файлы</div><button class="backtop" onclick="uploadDemo()">＋</button></div>
+  <div class="card"><h2>Избранное</h2><p class="small">Личное облачное пространство</p><div class="row">📄 Документы <b>0</b></div><div class="row">📷 Фотографии <b>0</b></div><div class="row">🎬 Видео <b>0</b></div><div class="row">🎵 Музыка <b>0</b></div><div class="row">🗜️ Архивы <b>0</b></div><button class="btn" onclick="uploadDemo()">Загрузить файл</button></div>
+  <div class="card"><div class="privacy">☁️ Файлы синхронизируются между авторизованными устройствами. В этой демо-версии загрузка является визуальной функцией.</div></div>
+ </section>
+
+ <section id="calls" class="section">
+  <div class="top"><div class="brand">📞 Звонки</div></div>
+  <div class="card"><div class="feature"><i>📞</i><div><b>Голосовой звонок</b><div class="small">Через интернет</div></div><button class="btn" onclick="alert('Демо: звонок')">Позвонить</button></div><div class="feature"><i>📹</i><div><b>Видеозвонок</b><div class="small">Камера и микрофон</div></div></div><div class="feature"><i>👥</i><div><b>Групповой звонок</b><div class="small">Команды, учеба, встречи</div></div></div><div class="feature"><i>🎙️</i><div><b>Голосовые чаты</b><div class="small">Разговор в группе</div></div></div></div>
+ </section>
+
+ <section id="profile" class="section">
+  <div class="top"><div class="brand">Профиль</div></div>
+  <div class="card" style="text-align:center"><div class="ava" style="margin:auto">😎</div><h2 id="pn">Пользователь</h2><div class="tag" id="pt">@user</div><p><span class="pill">🔒 Номер скрыт</span> <span class="pill">📍 Локация скрыта</span></p><p>🪙 <span id="balance">200</span> Nexo Coin</p></div>
+  <div class="card"><h3>Мой профиль</h3><div class="row">🖼️ Фото профиля <b>Изменить</b></div><div class="row">👤 Имя <b id="profileName">Пользователь</b></div><div class="row">🔗 @username <b id="profileTag">@user</b></div><div class="row">📱 Телефон <b>Не показывается</b></div><div class="row">🏠 Адрес проживания <b>Не собирается</b></div><div class="row">📍 Точная геолокация <b>Не собирается</b></div></div>
+ </section>
+
+ <section id="settings" class="section">
+  <div class="top"><div class="brand">⚙️ Настройки</div></div>
+  <div class="card"><h2>🔐 Конфиденциальность</h2><div class="privacy">Nexogram не показывает собеседникам номер телефона, точное местоположение, IP-адрес или адрес проживания в профиле. @username — основной способ поиска.</div><div class="row">📱 Номер телефона <b>Скрыт</b></div><div class="row">🏠 Адрес проживания <b>Не хранится</b></div><div class="row">📍 Геолокация <b>Выключена</b></div><div class="row">🌐 IP-адрес <b>Не виден пользователям</b></div><div class="row">👁️ Последний онлайн <b>Никто</b></div><div class="row">🚫 Заблокированные <b>0</b></div></div>
+  <div class="card"><h2>🛡️ Защита аккаунта</h2><div class="row">🔑 Пароль приложения <b class="switch">Вкл.</b></div><div class="row">🛡️ Двухэтапный вход <b class="switch">Вкл.</b></div><div class="row">📱 Активные устройства <b onclick="devices()">2</b></div><div class="row">🔒 Секретные чаты <b>Доступны</b></div></div>
+  <div class="card"><h2>✦ Nexogram Premium</h2><p>Больше лимитов • расширенное оформление • дополнительные возможности файлов и сообщений.</p><button class="btn" onclick="premium()">Подключить Premium</button></div>
+ </section>
+
+ <section id="bots" class="section">
+  <div class="top"><div class="brand">🤖 Боты</div><button class="backtop" onclick="newBot()">＋</button></div>
+  <div class="card"><h2>Каталог ботов</h2><div class="row">🤖 SupportBot <b>Поддержка</b></div><div class="row">🛒 ShopBot <b>Заказы</b></div><div class="row">📅 StudyBot <b>Расписание</b></div><div class="row">🌐 TranslateBot <b>Перевод</b></div><button class="btn" onclick="newBot()">Добавить бота</button></div>
+ </section>
+
+ <section id="miniapps" class="section">
+  <div class="top"><div class="brand">🧩 Mini Apps</div></div>
+  <div class="card"><h2>Приложения внутри Nexogram</h2><div class="feature"><i>🎮</i><div><b>Игры</b><div class="small">Запускаются внутри мессенджера</div></div></div><div class="feature"><i>🛍️</i><div><b>Магазины</b><div class="small">Каталоги и заказы</div></div></div><div class="feature"><i>📝</i><div><b>Формы</b><div class="small">Регистрация и заявки</div></div></div><div class="feature"><i>💳</i><div><b>Платежи</b><div class="small">Интеграция сервисов</div></div></div></div>
+ </section>
+
+ <section id="business" class="section">
+  <div class="top"><div class="brand">💼 Бизнес</div></div>
+  <div class="card"><h2>Nexogram для бизнеса</h2><div class="row">📢 Реклама <b>✓</b></div><div class="row">💬 Поддержка клиентов <b>✓</b></div><div class="row">🛍️ Продажи <b>✓</b></div><div class="row">👥 Сообщества <b>✓</b></div><div class="row">🤖 Автоответы <b>✓</b></div><div class="row">📦 Каталог товаров <b>✓</b></div><button class="btn" onclick="businessDemo()">Создать бизнес-профиль</button></div>
+ </section>
+
+ <div class="nav">
+  <button onclick="show('chats',this)" class="active"><b>💬</b>Чаты</button>
+  <button onclick="show('groups',this)"><b>👥</b>Группы</button>
+  <button onclick="show('channels',this)"><b>📢</b>Каналы</button>
+  <button onclick="show('store',this)"><b>🪙</b>Coin</button>
+  <button onclick="show('profile',this)"><b>👤</b>Профиль</button>
+  <button onclick="show('settings',this)"><b>⚙️</b>Настройки</button>
+ </div>
+</div>
+
+<div id="modal" class="modal" onclick="closeModal(event)"><div class="modalbox" id="modalContent"></div></div>
+
+<script>
+let balance=200;
+function show(id,btn){document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));if(btn)btn.classList.add('active');window.scrollTo(0,0)}
+function openSearch(){document.getElementById('searchInput').focus()}
+function filterChats(){let q=document.getElementById('searchInput').value.toLowerCase();document.querySelectorAll('#chatList .chat').forEach(x=>x.style.display=x.dataset.name.toLowerCase().includes(q)?'flex':'none')}
+function openChat(name,emoji){let w=document.createElement('div');w.className='chatwindow';w.innerHTML='<div class="chathead"><button class="back" onclick="this.closest(\'.chatwindow\').remove()">‹</button><div class="ava" style="width:42px;height:42px">'+emoji+'</div><div><b>'+name+'</b><div class="small">онлайн • номер скрыт</div></div></div><div class="messages"><div class="bubble">Привет! 👋</div><div class="bubble mine">Привет!</div><div class="bubble">🔒 Личные данные собеседников не отображаются.</div></div><div class="composer"><input placeholder="Сообщение" onkeydown="if(event.key===\'Enter\')sendMsg(this)"><button onclick="sendMsg(this.previousElementSibling)">➤</button></div>';document.body.appendChild(w)}
+function sendMsg(input){if(!input.value.trim())return;let b=document.createElement('div');b.className='bubble mine';b.textContent=input.value;input.closest('.chatwindow').querySelector('.messages').appendChild(b);input.value=''}
+function openChannel(){openChat('Nexogram News','📰')}
+function addCoins(){balance+=100;document.getElementById('balance').textContent=balance;alert('Начислено +100 Nexo Coin')}
+function modal(title,text,button){document.getElementById('modalContent').innerHTML='<h2>'+title+'</h2><p>'+text+'</p><button class="btn" onclick="hideModal()">'+(button||'Закрыть')+'</button>';document.getElementById('modal').style.display='flex'}
+function hideModal(){document.getElementById('modal').style.display='none'}
+function closeModal(e){if(e.target.id==='modal')hideModal()}
+function devices(){modal('📱 Активные устройства','iPhone • Сейчас<br>Web • Сейчас<br><br>Ни одно устройство не получает доступ к номеру или адресу проживания.')}
+function premium(){modal('✦ Nexogram Premium','Premium может включать расширенные лимиты, оформление, загрузку файлов и дополнительные функции.')}
+function uploadDemo(){modal('☁️ Файл','Демо: здесь будет выбор и загрузка документов, фото, видео, музыки и архивов.')}
+function newGroup(){modal('👥 Новая группа','Создание группы: название, фото, участники, администраторы, темы и защита от спама.')}
+function newChannel(){modal('📢 Новый канал','Создание канала: название, описание, фото, публикации и комментарии.')}
+function newBot(){modal('🤖 Новый бот','Подключение автоматического помощника Nexogram.')}
+function businessDemo(){modal('💼 Бизнес-профиль','Демо: создание страницы компании с каталогом, поддержкой и автоматическими ответами.')}
+document.getElementById('REGISTER_BUTTON').onclick=function(){let n=document.getElementById('name').value.trim(),t=document.getElementById('tag').value.trim().replace(/^@/,'');let err=document.getElementById('err');if(!n){err.textContent='Введите имя';return}if(!/^[a-zA-Z0-9_]{4,32}$/.test(t)){err.textContent='Username: 4–32 символа, латиница, цифры и _';return}document.getElementById('pn').textContent=n;document.getElementById('profileName').textContent=n;document.getElementById('pt').textContent='@'+t;document.getElementById('profileTag').textContent='@'+t;document.getElementById('registration').style.display='none';document.getElementById('messenger').style.display='block';window.scrollTo(0,0)}
+</script>
+</body>
+</html>
